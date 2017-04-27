@@ -1,0 +1,12 @@
+<resources>
+	<string name="app_name">Cricut Weather App</string>
+	<string name="action_settings">Settings</string>
+	<string name="section_format">Hello World from section: %1$d</string>
+	
+	<!-- Tab options -->
+	<string name="tab_current">Current</string>
+	<string name="tab_forecast">Forecast</string>
+	
+	<!-- TODO: Remove or change this placeholder text -->
+	<string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
