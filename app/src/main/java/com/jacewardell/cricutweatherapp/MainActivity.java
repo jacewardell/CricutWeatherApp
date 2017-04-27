@@ -10,13 +10,24 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.jacewardell.cricutweatherapp.Fragments.ForecastFragment;
+import com.jacewardell.cricutweatherapp.Models.Weather;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
+	private static final String TAG = "MainActivity";
+
+	private Weather weather;
 
 	/**
 	 * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -33,7 +44,8 @@ public class MainActivity extends AppCompatActivity {
 	 */
 	private ViewPager mViewPager;
 
-	private Retrofit retrofit = new Retrofit.Builder().baseUrl(Api.BASE_URL).build();
+	private Retrofit retrofit = new Retrofit.Builder().baseUrl(ApiService.BASE_URL)
+			.addConverterFactory(GsonConverterFactory.create()).build();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -68,7 +80,26 @@ public class MainActivity extends AppCompatActivity {
 	protected void onResume() {
 		super.onResume();
 
-		retrofit.
+		ApiService service = retrofit.create(ApiService.class);
+		Call<Weather> weatherCall = service.getWeather();
+		weatherCall.enqueue(new Callback<Weather>() {
+			@Override
+			public void onResponse(Call<Weather> call, Response<Weather> response) {
+				weather = response.body();
+				Log.d(TAG, "Weather: " + weather);
+			}
+
+			@Override
+			public void onFailure(Call<Weather> call, Throwable t) {
+				Log.d(TAG, "Failure!");
+			}
+		});
+		Log.d("test", "test");
+	}
+
+	@Override
+	protected void onPause() {
+		super.onPause();
 	}
 
 	@Override
@@ -107,8 +138,8 @@ public class MainActivity extends AppCompatActivity {
 		@Override
 		public Fragment getItem(int position) {
 			// getItem is called to instantiate the fragment for the given page.
-			// Return a PlaceholderFragment (defined as a static inner class below).
-			return PlaceholderFragment.newInstance(position + 1);
+			// Return a ForecastFragment (defined as a static inner class below).
+			return ForecastFragment.newInstance(position + 1);
 		}
 
 		@Override

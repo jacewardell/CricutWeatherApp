@@ -1,4 +1,4 @@
-package com.jacewardell.cricutweatherapp;
+package com.jacewardell.cricutweatherapp.Fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -7,11 +7,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.jacewardell.cricutweatherapp.R;
+
 
 /**
  * A placeholder fragment containing a simple view.
  */
-public class PlaceholderFragment extends Fragment {
+public class ForecastFragment extends Fragment {
 	/**
 	 * The fragment argument representing the section number for this
 	 * fragment.
@@ -22,8 +24,8 @@ public class PlaceholderFragment extends Fragment {
 	 * Returns a new instance of this fragment for the given section
 	 * number.
 	 */
-	public static PlaceholderFragment newInstance(int sectionNumber) {
-		PlaceholderFragment fragment = new PlaceholderFragment();
+	public static ForecastFragment newInstance(int sectionNumber) {
+		ForecastFragment fragment = new ForecastFragment();
 		Bundle args = new Bundle();
 		args.putInt(ARG_SECTION_NUMBER, sectionNumber);
 		fragment.setArguments(args);
