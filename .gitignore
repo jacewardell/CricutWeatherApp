@@ -26,3 +26,7 @@ local.properties
 ehthumbs.db
 Thumbs.db
 .idea/gradle.xml
+
+*.rawproto
+
+build/intermediates/dex-cache/cache.xml
