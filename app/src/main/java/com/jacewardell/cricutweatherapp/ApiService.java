@@ -6,7 +6,7 @@ import retrofit2.Call;
 import retrofit2.http.GET;
 
 /**
- * TODO JavaDoc
+ * Used with retrofit to get the Yahoo weather info
  * <p/>
  * Created by Jace Wardell on 4/27/17.
  */

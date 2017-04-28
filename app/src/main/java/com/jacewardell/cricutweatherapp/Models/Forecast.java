@@ -1,12 +1,12 @@
 package com.jacewardell.cricutweatherapp.Models;
 
+import java.io.Serializable;
+
 /**
- * TODO JavaDoc
  * <p/>
  * Created by Jace Wardell on 4/27/17.
  */
-public class Forecast
-{
+public class Forecast implements Serializable {
 	private String text;
 
 	private String high;
@@ -41,6 +41,23 @@ public class Forecast
 
 	public String getDay ()
 	{
+		switch(day) {
+			case "Sun":
+				return "Sunday";
+			case "Mon":
+				return "Monday";
+			case "Tue":
+				return "Tuesday";
+			case "Wed":
+				return "Wednesday";
+			case "Thu":
+				return "Thursday";
+			case "Fri":
+				return "Friday";
+			case "Sat":
+				return "Saturday";
+		}
+
 		return day;
 	}
 
