@@ -6,7 +6,4 @@
 	<!-- Tab options -->
 	<string name="tab_current">Current</string>
 	<string name="tab_forecast">Forecast</string>
-	
-	<!-- TODO: Remove or change this placeholder text -->
-	<string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

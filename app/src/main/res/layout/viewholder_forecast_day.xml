@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:layout_width="match_parent"
+				android:layout_height="@dimen/forecast_day_height"
+				xmlns:android="http://schemas.android.com/apk/res/android">
+	
+	<LinearLayout
+		android:id="@+id/day_date_layout"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:orientation="vertical">
+		
+		<TextView
+			android:id="@+id/forecast_day"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textSize="@dimen/forecast_date_font_size"
+			android:layout_alignParentStart="true"
+			android:layout_marginStart="@dimen/activity_horizontal_margin"
+			android:layout_marginTop="@dimen/activity_vertical_margin"
+			android:layout_weight="1"
+			android:text="TextView"/>
+		
+		<TextView
+			android:id="@+id/forecast_date"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textSize="@dimen/forecast_date_font_size"
+			android:layout_alignParentStart="true"
+			android:layout_below="@+id/forecast_day"
+			android:layout_marginStart="@dimen/activity_horizontal_margin"
+			android:layout_weight="1"
+			android:text="TextView"/>
+	</LinearLayout>
+	
+	<TextView
+		android:id="@+id/forecast_high"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_centerVertical="true"
+		android:layout_toStartOf="@+id/forecast_low"
+		android:text="TextView"
+		android:textColor="@color/high_temp"
+		android:textSize="@dimen/forecast_temp_font_size"
+		android:textStyle="bold"/>
+	
+	<TextView
+		android:id="@+id/forecast_low"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_centerVertical="true"
+		android:layout_marginEnd="@dimen/d64"
+		android:layout_marginStart="@dimen/activity_horizontal_margin"
+		android:layout_toStartOf="@+id/forecast_condition"
+		android:text="TextView"
+		android:textColor="@color/low_temp"
+		android:textSize="@dimen/forecast_temp_font_size"
+		android:textStyle="bold"/>
+	
+	<ImageView
+		android:id="@+id/forecast_condition"
+		android:layout_width="@dimen/forecast_icon_size"
+		android:layout_height="@dimen/forecast_icon_size"
+		android:layout_alignParentEnd="true"
+		android:layout_centerVertical="true"
+		android:layout_marginEnd="@dimen/activity_horizontal_margin"/>
+</RelativeLayout>

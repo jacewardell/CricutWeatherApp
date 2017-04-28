@@ -1,5 +1,7 @@
 package com.jacewardell.cricutweatherapp.Models;
 
+import java.util.List;
+
 /**
  * Contains all the Yahoo weather data and provides accessors to get that information more easily
  * <p/>
@@ -20,11 +22,11 @@ public class Weather
 	}
 
 	/**
-	 * Accessor that provides the 5 day weather forecast
+	 * Accessor that provides the 10 day weather forecast
 	 *
-	 * @return 5 day forecast
+	 * @return 10 day forecast
 	 */
-	public Forecast[] getForecast() {
+	public List<Forecast> getForecast() {
 		return query.getResults().getChannel().getItem().getForecast();
 	}
 
@@ -32,5 +34,10 @@ public class Weather
 	public String toString()
 	{
 		return "ClassPojo [query = "+query+"]";
+	}
+
+	public String getLocationString() {
+		Location location = query.getResults().getChannel().getLocation();
+		return location.getCity() + ", " + location.getRegion() + ", " + location.getCountry();
 	}
 }

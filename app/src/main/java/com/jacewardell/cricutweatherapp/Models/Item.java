@@ -2,8 +2,9 @@ package com.jacewardell.cricutweatherapp.Models;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 /**
- * TODO JavaDoc
  * <p/>
  * Created by Jace Wardell on 4/27/17.
  */
@@ -12,7 +13,7 @@ public class Item {
 
 	private String title;
 
-	private Forecast[] forecast;
+	private List<Forecast> forecast;
 
 	private Condition condition;
 
@@ -45,12 +46,12 @@ public class Item {
 		this.title = title;
 	}
 
-	public Forecast[] getForecast ()
+	public List<Forecast> getForecast ()
 	{
 		return forecast;
 	}
 
-	public void setForecast (Forecast[] forecast)
+	public void setForecast (List<Forecast> forecast)
 	{
 		this.forecast = forecast;
 	}

@@ -1,7 +1,6 @@
 package com.jacewardell.cricutweatherapp.Models;
 
 /**
- * TODO JavaDoc
  * <p/>
  * Created by Jace Wardell on 4/27/17.
  */

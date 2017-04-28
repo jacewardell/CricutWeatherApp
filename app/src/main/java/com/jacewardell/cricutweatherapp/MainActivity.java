@@ -1,8 +1,6 @@
 package com.jacewardell.cricutweatherapp;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -12,10 +10,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
 
+import com.jacewardell.cricutweatherapp.Fragments.ForecastDetailFragment;
 import com.jacewardell.cricutweatherapp.Fragments.ForecastFragment;
+import com.jacewardell.cricutweatherapp.Interfaces.ForecastListener;
+import com.jacewardell.cricutweatherapp.Models.Forecast;
 import com.jacewardell.cricutweatherapp.Models.Weather;
 
 import retrofit2.Call;
@@ -24,7 +23,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements ForecastListener {
 	private static final String TAG = "MainActivity";
 
 	private Weather weather;
@@ -43,6 +42,8 @@ public class MainActivity extends AppCompatActivity {
 	 * The {@link ViewPager} that will host the section contents.
 	 */
 	private ViewPager mViewPager;
+
+	private ForecastFragment forecastFragment;
 
 	private Retrofit retrofit = new Retrofit.Builder().baseUrl(ApiService.BASE_URL)
 			.addConverterFactory(GsonConverterFactory.create()).build();
@@ -64,21 +65,13 @@ public class MainActivity extends AppCompatActivity {
 
 		TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
 		tabLayout.setupWithViewPager(mViewPager);
-
-		FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-		fab.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-						.setAction("Action", null).show();
-			}
-		});
-
 	}
 
 	@Override
 	protected void onResume() {
 		super.onResume();
+
+		forecastFragment = ForecastFragment.newInstance(0);
 
 		ApiService service = retrofit.create(ApiService.class);
 		Call<Weather> weatherCall = service.getWeather();
@@ -86,6 +79,12 @@ public class MainActivity extends AppCompatActivity {
 			@Override
 			public void onResponse(Call<Weather> call, Response<Weather> response) {
 				weather = response.body();
+				forecastFragment.setForecast(weather.getForecast());
+
+				String locationString = weather.getLocationString();
+				if(locationString != null && !locationString.isEmpty()) {
+					getSupportActionBar().setTitle(locationString);
+				}
 				Log.d(TAG, "Weather: " + weather);
 			}
 
@@ -94,7 +93,6 @@ public class MainActivity extends AppCompatActivity {
 				Log.d(TAG, "Failure!");
 			}
 		});
-		Log.d("test", "test");
 	}
 
 	@Override
@@ -104,26 +102,15 @@ public class MainActivity extends AppCompatActivity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.menu_main, menu);
-		return true;
+		return false;
 	}
 
 	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
-		int id = item.getItemId();
-
-		//noinspection SimplifiableIfStatement
-		if (id == R.id.action_settings) {
-			return true;
-		}
-
-		return super.onOptionsItemSelected(item);
+	public void onForecastClicked(Forecast forecast) {
+		ForecastDetailFragment forecastDetailFragment = ForecastDetailFragment.newInstance
+				(forecast);
+		forecastDetailFragment.show(getSupportFragmentManager(), "detail_fragment");
 	}
-
 
 	/**
 	 * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
@@ -137,24 +124,22 @@ public class MainActivity extends AppCompatActivity {
 
 		@Override
 		public Fragment getItem(int position) {
-			// getItem is called to instantiate the fragment for the given page.
-			// Return a ForecastFragment (defined as a static inner class below).
-			return ForecastFragment.newInstance(position + 1);
+			return forecastFragment;
 		}
 
 		@Override
 		public int getCount() {
 			// Show 2 total pages.
-			return 2;
+			return 1;
 		}
 
 		@Override
 		public CharSequence getPageTitle(int position) {
 			switch (position) {
 				case 0:
-					return "CURRENT";
-				case 1:
 					return "FORECAST";
+//				case 1:
+//					return "CURRENT";
 			}
 			return null;
 		}
